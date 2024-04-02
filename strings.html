@@ -1,0 +1,121 @@
+<!-- Palindrome Checker by Ethan Kromschroeder -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker</title>
+    <!-- Added creative elements -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #995f5f; /* Light gray background color */
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff; /* White background for the container */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Added styling for result message */
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        /* Added styling for error message */
+        .error {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        /* Added styling for date display */
+        #currentDate {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Palindrome Checker</h1>
+        <p>Enter a word or phrase to check if it's a palindrome:</p>
+        <input type="text" id="userInput">
+        <button onclick="checkPalindrome()">Check</button>
+        <p id="result"></p>
+        <p id="error" class="error"></p> <!-- Added element for error message -->
+        <p id="currentDate"></p> <!-- Added element for current date -->
+    </div>
+
+    <!-- JavaScript for palindrome checking and date display -->
+    <script>
+        // Function to check if a string is a palindrome
+        function isPalindrome(str) {
+            str = str.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+            return str === str.split('').reverse().join('');
+        }
+
+        // Function to handle button click
+        function checkPalindrome() {
+            var userInput = document.getElementById("userInput").value;
+            var errorElement = document.getElementById("error");
+
+            // Reset result and error messages
+            document.getElementById("result").innerHTML = "";
+            errorElement.innerHTML = "";
+
+            // Input validation - checking if input is not empty
+            if (userInput.trim() === "") {
+                errorElement.innerHTML = "Please enter a word or phrase.";
+                return; // Exit the function early if input is empty
+            }
+
+            // Check if it's a palindrome
+            if (isPalindrome(userInput)) {
+                document.getElementById("result").innerHTML = "<strong>Yes!</strong> '" + userInput + "' is a palindrome.";
+            } else {
+                document.getElementById("result").innerHTML = "<strong>No!</strong> '" + userInput + "' is not a palindrome.";
+                playWrongBuzzer(); // Play sound if it's not a palindrome
+            }
+        }
+
+        // Function to play "Wrong Buzzer - Sound Effect"
+        function playWrongBuzzer() {
+            var audio = new Audio ('C://Users//kroms//Desktop//CSC102//wrong_buzzer.mp4')
+            audio.volume = 1; // Set volume to 100%
+            audio.play();
+        }
+
+        // Display current date when the page loads
+        window.onload = function() {
+            var currentDateElement = document.getElementById("currentDate");
+            var currentDate = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            currentDateElement.innerHTML = "Current Date: " + currentDate;
+        };
+    </script>
+</body>
+</html>
